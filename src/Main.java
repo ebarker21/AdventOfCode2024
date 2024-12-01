@@ -2,58 +2,46 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args){
         int total = 0;
-        File input = new File("C:\\Users\\Eric\\Documents\\AdventOfCode2024\\Day1\\example");
-        String[] array1;
-        String[] array2;
-        String[] splitStrings = new String[2];
+        File input = new File("C:\\Users\\Eric\\Documents\\AdventOfCode2024\\Day1\\input.txt");
+        ArrayList<Integer> array1 = new ArrayList<>(2);
+        ArrayList<Integer> array2 = new ArrayList<>(2);
+        int index = 0;
         try {
             Scanner sc = new Scanner(input);
             while(sc.hasNextLine()){
-                String inputString = sc.nextLine();
-                splitStrings = inputString.split("   ");
-                String inputString1 = splitStrings[0];
-                String inputString2 = splitStrings[1];
-                array1 = inputString1.split("");
-                array2 = inputString2.split("");
-                array1 = BubbleSort(array1);
-                array2 = BubbleSort(array2);
-                System.out.println("testing Compare: "+Compare(array1,array2));
-                total = total + Compare(array1, array2);
+                array1.add(sc.nextInt());
+                array2.add(sc.nextInt());
+                sc.nextLine();
             }
-            System.out.print("ideally the total: "+total);
+            Collections.sort(array1);
+            Collections.sort(array2);
+            total = Compare(array1, array2);
+
+            //Part 2
+            total = 0;
+            for(int i = 0; i < array1.size(); i++){
+                int indexValue = array1.get(i);
+                int count = findSimilar(indexValue, array1);
+                 total += indexValue * count;
+            }
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static int Compare(String[] input1, String[] input2){
+    private static int Compare(ArrayList<Integer> input1, ArrayList<Integer> input2){
         int total = 0;
-        for(int i = 0; i < input1.length || i < input2.length; i++){
-            total = total + Math.abs(Integer.parseInt(input1[i]) - Integer.parseInt(input2[i]));
+        int index = 0;
+        for(int i = 0; i < input1.size(); i++){
+            total = total + Math.abs(input1.get(i) - input2.get(i));
         }
         return total;
-    }
-
-    private static String[] BubbleSort(String[] input){
-        System.out.print("input before sorting: ");
-        printArray(input);
-        for(int i = 0; i < input.length; i++){
-            for(int j = 0; j < input.length-1; j++){
-                if(Integer.parseInt(input[j]) > Integer.parseInt(input[j+1])){
-                    String temp = input[j];
-                    input[j] = input[j+1];
-                    input[j+1] = temp;
-                }
-            }
-        }
-        System.out.print("input after sorting: ");
-        printArray(input);
-        return input;
     }
 
     private static void printArray(String[] input){
@@ -62,4 +50,14 @@ public class Main {
         }
         System.out.println();
     }
+    private static int findSimilar(int target,ArrayList<Integer> list){
+        int counter = 0;
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) == target){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
 }
