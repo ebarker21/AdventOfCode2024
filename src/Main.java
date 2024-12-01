@@ -6,11 +6,10 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args){
-        int total = 0;
+        int total;
         File input = new File("C:\\Users\\Eric\\Documents\\AdventOfCode2024\\Day1\\input.txt");
         ArrayList<Integer> array1 = new ArrayList<>(2);
         ArrayList<Integer> array2 = new ArrayList<>(2);
-        int index = 0;
         try {
             Scanner sc = new Scanner(input);
             while (sc.hasNextLine()) {
@@ -25,6 +24,7 @@ public class Main {
             Collections.sort(array1);
             Collections.sort(array2);
             total = Compare(array1, array2);
+            System.out.println("Total distance: "+total);
 
             //Part 2
             total = 0;
@@ -33,24 +33,17 @@ public class Main {
                 int count = findSimilar(indexValue, array2);
                  total += indexValue * count;
             }
-            System.out.print(total);
+            System.out.print("Total similarity: "+total);
         }
 
     private static int Compare(ArrayList<Integer> input1, ArrayList<Integer> input2){
         int total = 0;
-        int index = 0;
         for(int i = 0; i < input1.size(); i++){
             total = total + Math.abs(input1.get(i) - input2.get(i));
         }
         return total;
     }
 
-    private static void printArray(String[] input){
-        for(String i : input){
-            System.out.print(i + ",");
-        }
-        System.out.println();
-    }
     private static int findSimilar(int target,ArrayList<Integer> list){
         int counter = 0;
         for(int i = 0; i < list.size(); i++){
@@ -60,5 +53,4 @@ public class Main {
         }
         return counter;
     }
-
 }
