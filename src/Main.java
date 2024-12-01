@@ -13,10 +13,14 @@ public class Main {
         int index = 0;
         try {
             Scanner sc = new Scanner(input);
-            while(sc.hasNextLine()){
+            while (sc.hasNextLine()) {
                 array1.add(sc.nextInt());
                 array2.add(sc.nextInt());
                 sc.nextLine();
+            }
+        }
+        catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
             }
             Collections.sort(array1);
             Collections.sort(array2);
@@ -26,14 +30,11 @@ public class Main {
             total = 0;
             for(int i = 0; i < array1.size(); i++){
                 int indexValue = array1.get(i);
-                int count = findSimilar(indexValue, array1);
+                int count = findSimilar(indexValue, array2);
                  total += indexValue * count;
             }
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.print(total);
         }
-    }
 
     private static int Compare(ArrayList<Integer> input1, ArrayList<Integer> input2){
         int total = 0;
