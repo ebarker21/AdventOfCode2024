@@ -1,0 +1,7 @@
+Set the path/to/example in the arguments before running the code.
+
+This Day's first part was about sorting then comparing two long lists of unsorted numbers to find the "distance" 
+between them (ex. left is 3, right is 4, the distance is then 1). The total distance between all the numbers was the
+answer.
+The second part was about finding how often the right side had a target number on the left then multiplying said 
+target number by the returned count. These numbers were added up for the final answer.
