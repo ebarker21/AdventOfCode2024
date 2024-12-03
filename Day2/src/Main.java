@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args){
         File input = new File(args[0]);
         int safeReports = 0;
+        int safeReportsBL = 0;
         try {
             Scanner sc = new Scanner(input);
             do{
@@ -19,11 +20,15 @@ public class Main {
                 if(isSafe(reportList)){
                     safeReports++;
                 }
+                if(isSafeBadLevel(reportList)){
+                    safeReportsBL++;
+                }
             }while(sc.hasNextLine());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Safe Reports: "+safeReports);
+        System.out.println("Safe reports: "+safeReports);
+        System.out.println("Safe reports with a bad Level: "+safeReportsBL);
     }
 
     private static boolean isSafe(int[] report){
@@ -52,5 +57,32 @@ public class Main {
         return true;
     }
 
+    //Part 2 Methods
+    private static boolean isSafeBadLevel(int[] report) {
+        int[] badLevelArray;
+        if(isSafe(report)){
+            return true;
+        }
+        else {
+            for (int i = 0; i < report.length; i++){
+                badLevelArray = removeIndex(report, i);
+                if(isSafe(badLevelArray)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    private static int[] removeIndex(int[] array, int index){
+        int[] newArray = new int[array.length-1];
+        int newIndex = 0;
+        for(int i = 0; i < newArray.length+1; i++){
+            if(i != index){
+                newArray[newIndex] = array[i];
+                newIndex++;
+            }
+        }
+        return newArray;
+    }
 }
