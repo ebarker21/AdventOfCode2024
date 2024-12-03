@@ -5,7 +5,6 @@ import java.io.File;
 public class Main {
     public static void main(String[] args){
         File input = new File(args[0]);
-        boolean isSafe = false;
         int safeReports = 0;
         try {
             Scanner sc = new Scanner(input);
@@ -17,61 +16,39 @@ public class Main {
                 for(int i = 0; i < reportList.length; i++){
                     reportList[i] = Integer.parseInt(reportStringArray[i]);
                 }
-                //starting values
-                int level = reportList[0];
-                int nextLevel = reportList[1];
-                //decreasing
-                if(level > nextLevel && Math.abs(level - nextLevel) < 4 && level != nextLevel){
-                    for(int i = 1; i < reportList.length-1; i++){
-                        if(level > nextLevel && Math.abs(level - nextLevel) < 4 && level != nextLevel){
-                            level = reportList[i];
-                            nextLevel = reportList[i+1];
-                        }
-                        else{
-                            isSafe = false;
-                            break;
-                        }
-                        isSafe = true;
-                    }
-                    if(isSafe) {
-                        safeReports++;
-                    }
-                }
-                //increasing
-                else if(level < nextLevel && Math.abs(level - nextLevel) < 4 && level != nextLevel){
-                    for(int i = 1; i < reportList.length-1; i++){
-                        if(level < nextLevel && Math.abs(level - nextLevel) < 4 && level != nextLevel){
-                            level = reportList[i];
-                            nextLevel = reportList[i+1];
-                        }
-                        else{
-                            isSafe = false;
-                            break;
-                        }
-                        isSafe = true;
-                    }
-                    if(isSafe) {
-                        safeReports++;
-                    }
+                if(isSafe(reportList)){
+                    safeReports++;
                 }
             }while(sc.hasNextLine());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        System.out.print("Safe Reports: "+safeReports);
+        System.out.println("Safe Reports: "+safeReports);
     }
 
     private static boolean isSafe(int[] report){
-        int increment = 1;
         boolean increasing = false;
         if(report[0] < report[1]){
             increasing = true;
         }
-
-        for(int i = 0; i < report.length; i++){
-
+        for(int i = 0; i < report.length-1; i++){
+            if(increasing){
+                if(report[i] > report[i+1]){
+                    return false;
+                }
+            }
+            else{
+                if(report[i] < report[i+1]){
+                    return false;
+                }
+            }
+            if(Math.abs(report[i] - report[i+1]) > 3){
+                return false;
+            }
+            if(report[i] == report[i+1]){
+                return false;
+            }
         }
-
         return true;
     }
 
