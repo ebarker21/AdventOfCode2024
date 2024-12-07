@@ -10,7 +10,7 @@ public class Main {
         String inputString = inputToString(input);
         int total = mulParser(inputString);
         System.out.println("total: "+total);
-        total = mulParser(removeDonts(inputString));
+        total = mulParser(removeDontSections(inputString));
         System.out.println("total without don'ts: "+total);
     }
 
@@ -81,7 +81,7 @@ public class Main {
         return output;
     }
 
-    private static String removeDonts(String input){
+    private static String removeDontSections(String input){
         int begin = 0;
         boolean good = true;
         String doString = "";
