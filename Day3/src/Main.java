@@ -44,7 +44,9 @@ public class Main {
                                         }while (Character.isDigit(input.charAt(i)));
                                         mul[1] = Integer.parseInt(Number);
                                         Number = "";
-                                        foundMuls.add(mul);
+                                        if(input.charAt(i) == ')'){
+                                            foundMuls.add(mul);
+                                        }
                                     }
                                 }
                             }
@@ -52,6 +54,7 @@ public class Main {
                     }
                 }
             }
+            mul = new int[2];
         }
 
         //Adds up the muls
